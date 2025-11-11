@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from '@vercel/analytics/next';
 import "./globals.css";
 // import VisualEditsMessenger from "../visual-edits/VisualEditsMessenger";
 // import ErrorReporter from "@/components/ErrorReporter";
@@ -39,6 +40,7 @@ export default function RootLayout({
             {children}
           </ShopifyCartProvider>
         </CurrencyProvider>
+        <Analytics />
         {/* <VisualEditsMessenger /> */}
       </body>
     </html>
