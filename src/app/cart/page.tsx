@@ -46,7 +46,7 @@ export default function CartPage() {
     return (
       <div className="min-h-screen bg-white">
         <Nav />
-        <div className="py-8 md:py-16 border-2 border-red-900">
+        <div className="py-8 md:py-16">
           <div className="container mx-auto px-4">
             {/* Breadcrumb */}
             <div className="flex items-center gap-2 text-sm text-text-secondary mb-6">
@@ -64,7 +64,7 @@ export default function CartPage() {
               <p className="text-xl text-text-secondary mb-6">Your cart is empty</p>
               <Link
                 href="/collections/all-products"
-                className="inline-block bg-accent-pink text-white px-8 py-3 rounded-lg font-semibold hover:bg-accent-pink-dark transition-colors"
+                className="inline-block bg-[#d68972] text-white px-8 py-3 rounded-lg font-semibold hover:bg-[#d68972]/70 transition-colors"
               >
                 Continue Shopping
               </Link>
@@ -79,7 +79,7 @@ export default function CartPage() {
   return (
     <div className="min-h-screen bg-white">
       <Nav />
-      <div className="pb-8 md:pb-16 border-red-900">
+      <div className="pb-8 md:pb-16">
         <div className="container mx-auto px-4">
           {/* Breadcrumb */}
           <div className="flex items-center pt-4 gap-2 text-sm text-text-secondary mb-6">
