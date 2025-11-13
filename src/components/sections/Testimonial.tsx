@@ -105,7 +105,7 @@ const reviewsData: Review[] = [
         productName: 'Attipas Tortoise Green',
         productImage: `${BASE_URL}/baby-shoe/shoe-details/tortoise/A25TO-Tortoise-1.webp`,
         reviewText: 'These shoes have been great, our little one loves wearing them and is extremely confident in wearing them.',
-        reviewerName: 'Raniyah',
+        reviewerName: 'Nermine',
         country: 'Mauritius',
         slug: 'tortoise-green',
         productHandle: 'tortoise-green',

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 interface ContactSupportProps {
     title: string;
     description: string;
@@ -15,7 +16,7 @@ const ContactSupport = ({ title, description, buttonText }: ContactSupportProps)
                     {description}
                 </p>
                 <Button variant="coral" className="border-0 cursor-pointer">
-                    {buttonText}
+                    <Link href="tel:+23058165618" className="text-white">{buttonText}</Link>
                 </Button>
             </div>
         </section>

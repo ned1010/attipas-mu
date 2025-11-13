@@ -221,7 +221,7 @@ export default function CartPage() {
                       <span className="font-medium">{currencySymbol} {parseFloat(totalAmount).toFixed(2)}</span>
                     </div>
                     <div className="flex justify-between py-2 text-sm text-gray-500">
-                      <span>Tax included. <Link href="/shipping" className="underline">Shipping</Link> calculated at checkout.</span>
+                      <span>Tax included in the total price. <Link href="/shipping" className="underline">Shipping</Link> calculated at checkout.</span>
                     </div>
 
                     <button

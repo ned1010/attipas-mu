@@ -1,15 +1,9 @@
 "use client";
-
-import { useState } from 'react';
-
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Mail, Phone, MapPin, Clock, Send } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import Link from "next/link";
-
+import { useEffect } from "react";
 const ContactHero = () => {
     return (
         <section className="relative  overflow-hidden py-10">
@@ -40,157 +34,6 @@ const ContactHero = () => {
                 CONTACT
             </div>
         </section>
-    );
-};
-
-const ContactForm = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-    });
-
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-
-        // Simulate form submission
-        setTimeout(() => {
-            setIsSubmitting(false);
-            setSubmitStatus('success');
-            setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
-
-            setTimeout(() => setSubmitStatus('idle'), 5000);
-        }, 1500);
-    };
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setFormData(prev => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }));
-    };
-
-    return (
-        <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label htmlFor="name" className="block text-sm font-medium text-[#2B2B2B] mb-2">
-                        Full Name *
-                    </label>
-                    <Input
-                        id="name"
-                        name="name"
-                        type="text"
-                        required
-                        value={formData.name}
-                        onChange={handleChange}
-                        placeholder="John Doe"
-                        className="h-12 bg-white border-[#e0e0e0] focus-visible:ring-[#2B2B2B]"
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor="email" className="block text-sm font-medium text-[#2B2B2B] mb-2">
-                        Email Address *
-                    </label>
-                    <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        required
-                        value={formData.email}
-                        onChange={handleChange}
-                        placeholder="john@example.com"
-                        className="h-12 bg-white border-[#e0e0e0] focus-visible:ring-[#2B2B2B]"
-                    />
-                </div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label htmlFor="phone" className="block text-sm font-medium text-[#2B2B2B] mb-2">
-                        Phone Number
-                    </label>
-                    <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        value={formData.phone}
-                        onChange={handleChange}
-                        placeholder="(+230) 5816 5618"
-                        className="h-12 bg-white border-[#e0e0e0] focus-visible:ring-[#2B2B2B]"
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor="subject" className="block text-sm font-medium text-[#2B2B2B] mb-2">
-                        Subject *
-                    </label>
-                    <Input
-                        id="subject"
-                        name="subject"
-                        type="text"
-                        required
-                        value={formData.subject}
-                        onChange={handleChange}
-                        placeholder="How can we help?"
-                        className="h-12 bg-white border-[#e0e0e0] focus-visible:ring-[#2B2B2B]"
-                    />
-                </div>
-            </div>
-
-            <div>
-                <label htmlFor="message" className="block text-sm font-medium text-[#2B2B2B] mb-2">
-                    Message *
-                </label>
-                <Textarea
-                    id="message"
-                    name="message"
-                    required
-                    value={formData.message}
-                    onChange={handleChange}
-                    placeholder="Tell us more about your inquiry..."
-                    rows={6}
-                    className="bg-white border-[#e0e0e0] focus-visible:ring-[#2B2B2B] resize-none"
-                />
-            </div>
-
-            {submitStatus === 'success' && (
-                <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg">
-                    Thank you for your message! We&apos;ll get back to you soon.
-                </div>
-            )}
-
-            {submitStatus === 'error' && (
-                <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-                    Something went wrong. Please try again.
-                </div>
-            )}
-
-            <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full md:w-auto h-12 px-8 bg-[#2B2B2B] hover:bg-[#1a1a1a] text-white font-medium"
-            >
-                {isSubmitting ? (
-                    <>
-                        <span className="animate-spin mr-2">⏳</span>
-                        Sending...
-                    </>
-                ) : (
-                    <>
-                        <Send className="w-4 h-4 mr-2" />
-                        Send Message
-                    </>
-                )}
-            </Button>
-        </form>
     );
 };
 
@@ -247,9 +90,12 @@ const ContactFormSection = () => {
                             <p className="text-lg text-[#666666] mb-8">
                                 Fill out the form below and we&apos;ll get back to you as soon as possible.
                             </p>
-                            <ContactForm />
+                            {/* Form here */}
+                            <div id='hubspot-form-container'>
+                            </div>
                         </div>
                     </div>
+
 
                     {/* Right Column - Contact Info */}
                     <div>
@@ -263,6 +109,29 @@ const ContactFormSection = () => {
         </section>
     );
 };
+
+type HubSpotFormCreateOptions = {
+    portalId: string;
+    formId: string;
+    target: string;
+    region?: string;
+};
+
+type HubSpotFormsApi = {
+    create: (options: HubSpotFormCreateOptions) => void;
+};
+
+type HubSpotApi = {
+    forms?: HubSpotFormsApi;
+};
+
+declare global {
+    interface Window {
+        hbspt?: HubSpotApi;
+    }
+}
+
+
 
 const MapSection = () => {
     return (
@@ -297,6 +166,35 @@ const MapSection = () => {
 };
 
 export default function StoreLocationPage() {
+
+    useEffect(() => {
+        // Dynamically load the HubSpot form script
+        const script = document.createElement('script');
+        script.src = "//js.hsforms.net/forms/embed/v2.js";
+        script.charset = "utf-8";
+        script.type = "text/javascript";
+        script.async = true;
+
+        script.onload = () => {
+            // Initialize the form after the script loads
+            if (window.hbspt && window.hbspt.forms) {
+                window.hbspt.forms.create({
+                    portalId: "46944519",
+                    formId: "0cf01259-a3bb-467b-b8d4-5bafba5eaa11",
+                    target: '#hubspot-form-container'  // Specify the target element for the form
+                });
+            }
+        };
+
+        // Append the script to the body
+        document.body.appendChild(script);
+
+        // Cleanup function to remove the script when the component unmounts
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
     return (
         <div className="min-h-screen bg-white">
             <Nav />
