@@ -663,7 +663,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                                 )}
                             </button>
 
-                            <div className="flex space-x-3">
+                            {/* <div className="flex space-x-3">
                                 <button
                                     onClick={() => setIsFavorite(!isFavorite)}
                                     className={`flex-1 border border-gray-300 py-3 px-4 rounded-lg flex items-center justify-center space-x-2 transition-colors ${isFavorite ? 'bg-red-50 border-red-300 text-red-600' : 'hover:bg-gray-50'
@@ -676,7 +676,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                                     <Share2 className="w-5 h-5" />
                                     <span>Share</span>
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
 
                         {/* Features */}
@@ -698,10 +698,10 @@ export default function ProductPage({ params }: ProductPageProps) {
                                 <ShieldCheck className="w-8 h-8 text-[#d68972] mx-auto mb-2" />
                                 <div className="text-sm font-medium">Safe Materials</div>
                             </div>
-                            <div className="text-center">
+                            {/* <div className="text-center">
                                 <Truck className="w-8 h-8 text-[#d68972] mx-auto mb-2" />
                                 <div className="text-sm font-medium">Free Shipping</div>
-                            </div>
+                            </div> */}
                             <div className="text-center">
                                 <RefreshCcw className="w-8 h-8 text-[#d68972] mx-auto mb-2" />
                                 <div className="text-sm font-medium">Easy Returns</div>
