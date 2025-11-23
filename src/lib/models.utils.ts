@@ -98,9 +98,8 @@ export const MODELS_DATA: Record<string, ModelData> = {
     'gradation': {
         name: 'Gradation',
         slug: 'gradation',
-        image: `${BASE_URL}/baby-shoe/models/gradation/gradation_pink_01.webp`,
+        image: `${BASE_URL}/baby-shoe/models/gradation/gradation_pink_02.webp`,
         galleryImages: [
-            `${BASE_URL}/baby-shoe/models/gradation/gradation_pink_01.webp`,
             `${BASE_URL}/baby-shoe/models/gradation/gradation_pink_02.webp`,
             `${BASE_URL}/baby-shoe/models/gradation/gradation_pink_03.webp`,
             `${BASE_URL}/baby-shoe/models/gradation/gradation_pink_04.webp`,
@@ -187,15 +186,15 @@ export const MODELS_DATA: Record<string, ModelData> = {
             ]
         }
     },
+
     'baby-crab': {
         name: 'Baby-crab',
         slug: 'baby-crab',
-        image: `${BASE_URL}/baby-shoe/models/baby-crab/A25BC-Baby-crab-2.webp`,
+        image: `https://djunoemhhucuiipi.public.blob.vercel-storage.com/baby-shoe/models/baby-crab/A25BS-Baby-crab-2.webp`,
         galleryImages: [
-            `${BASE_URL}/baby-shoe/models/baby-crab/A25BS-Baby-crab-4.webp`,
-            `${BASE_URL}/baby-shoe/models/baby-crab/A25BS-Baby-crab-2.webp`,
-            `${BASE_URL}/baby-shoe/models/baby-crab/A25BS-Baby-crab-5.webp`,
-            `${BASE_URL}/baby-shoe/models/baby-crab/A25BS-Baby-crab-22.webp`,
+            `https://djunoemhhucuiipi.public.blob.vercel-storage.com/baby-shoe/models/baby-crab/A25BS-Baby-crab-4.webp`,
+            `https://djunoemhhucuiipi.public.blob.vercel-storage.com/baby-shoe/models/baby-crab/A25BS-Baby-crab-5.webp`,
+            `https://djunoemhhucuiipi.public.blob.vercel-storage.com/baby-shoe/models/baby-crab/A25BS-Baby-crab-22.webp`,
         ],
         specifications: {
             upper: 'Cotton, Spandex, Elastane Yarn',

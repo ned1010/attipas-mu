@@ -8,17 +8,17 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://djunoemhhucuiipi.p
 const shopLinks = [
   { name: "Shop", href: "/collections/all-products" },
   // { name: 'Best Seller', href: '/bestseller' },
-  { name: "Size Guide", href: "/sizing" },
+  { name: "Size Guide", href: "/size-guide" },
   { name: "Gallery", href: "/models" },
   { name: "Science", href: "/science/seven-point-system" },
-  { name: "New Arrival", href: "/new-collection" },
+  { name: "New Arrival", href: "/collections/new-collection" },
   // { name: "Terms of Service", href: "#" },
   // { name: "Sale", href: "/sale" },
 ];
 
 const aboutUsLinks = [
   { name: "About Us", href: "/store-location" },
-  { name: "Contact", href: "/contact" },
+  { name: "Contact", href: "/store-location" },
   // { name: "Reviews", href: "#" },
   // { name: "Recommendations", href: "#" },
   // { name: "Shipping & Returns", href: "#" },

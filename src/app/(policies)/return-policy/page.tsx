@@ -186,7 +186,7 @@ const ReturnPolicyContent = () => {
                         <div className="bg-[#2B2B2B] text-white p-8 rounded-2xl mt-8">
                             <div className="flex items-center gap-3 mb-4">
                                 <Mail className="w-6 h-6" />
-                                <h3 className="text-xl font-semibold">Need Help?</h3>
+                                <h3 className="text-xl font-semibold text-white">Need Help?</h3>
                             </div>
                             <p className="mb-4">
                                 If you have any questions about our return policy or need assistance with your return,
