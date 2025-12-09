@@ -3,6 +3,7 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { getAllProducts, ShopifyProduct } from '@/lib/shopify';
 import { MODELS_DATA, ModelData } from '@/lib/models.utils';
+import { useCurrency } from '@/contexts/currency-context';
 
 // Search result types
 export interface SearchResultItem {
@@ -49,6 +50,7 @@ interface SearchContextType {
 const SearchContext = createContext<SearchContextType | undefined>(undefined);
 
 export function SearchProvider({ children }: { children: React.ReactNode }) {
+    const { formatPrice, currencySymbol } = useCurrency();
     const [query, setQuery] = useState('');
     const [results, setResults] = useState<SearchResultItem[]>([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -82,7 +84,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     }, [cacheLoaded]);
 
     // Transform Shopify product to search result
-    const transformProductToSearchResult = (product: ShopifyProduct): SearchResultItem => {
+    const transformProductToSearchResult = useCallback((product: ShopifyProduct): SearchResultItem => {
         const image = product.images.edges[0]?.node.url || '/images/placeholder.jpg';
         const price = product.priceRange.minVariantPrice.amount;
 
@@ -93,13 +95,13 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
             description: product.description,
             image,
             url: `/products/${product.handle}`,
-            price: `$${parseFloat(price).toFixed(2)}`,
+            price: formatPrice(parseFloat(price)),
             tags: product.tags,
             colors: product.variants.edges
                 .map(v => v.node.selectedOptions.find(opt => opt.name.toLowerCase() === 'color')?.value)
                 .filter(Boolean) as string[]
         };
-    };
+    }, [formatPrice]);
 
     // Transform model to search result
     const transformModelToSearchResult = (model: ModelData): SearchResultItem => {
@@ -143,14 +145,14 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
     };
 
     // Apply search filters
-    const applyFilters = (results: SearchResultItem[], currentFilters: SearchFilters): SearchResultItem[] => {
+    const applyFilters = useCallback((results: SearchResultItem[], currentFilters: SearchFilters): SearchResultItem[] => {
         let filtered = [...results];
 
         // Filter by price range
         if (currentFilters.priceRange) {
             filtered = filtered.filter(item => {
                 if (!item.price) return true;
-                const price = parseFloat(item.price.replace('$', ''));
+                const price = parseFloat(item.price.replace(currencySymbol, ''));
                 return price >= currentFilters.priceRange!.min && price <= currentFilters.priceRange!.max;
             });
         }
@@ -168,23 +170,23 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
         }
 
         return filtered;
-    };
+    }, [currencySymbol]);
 
     // Sort search results
-    const sortResults = (results: SearchResultItem[], sortBy: string): SearchResultItem[] => {
+    const sortResults = useCallback((results: SearchResultItem[], sortBy: string): SearchResultItem[] => {
         const sorted = [...results];
 
         switch (sortBy) {
             case 'price-low':
                 return sorted.sort((a, b) => {
-                    const priceA = a.price ? parseFloat(a.price.replace('$', '')) : 0;
-                    const priceB = b.price ? parseFloat(b.price.replace('$', '')) : 0;
+                    const priceA = a.price ? parseFloat(a.price.replace(currencySymbol, '')) : 0;
+                    const priceB = b.price ? parseFloat(b.price.replace(currencySymbol, '')) : 0;
                     return priceA - priceB;
                 });
             case 'price-high':
                 return sorted.sort((a, b) => {
-                    const priceA = a.price ? parseFloat(a.price.replace('$', '')) : 0;
-                    const priceB = b.price ? parseFloat(b.price.replace('$', '')) : 0;
+                    const priceA = a.price ? parseFloat(a.price.replace(currencySymbol, '')) : 0;
+                    const priceB = b.price ? parseFloat(b.price.replace(currencySymbol, '')) : 0;
                     return priceB - priceA;
                 });
             case 'name':
@@ -197,7 +199,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
                     return scoreB - scoreA;
                 });
         }
-    };
+    }, [currencySymbol]);
 
     // Search function
     const search = useCallback(async (searchQuery: string) => {
@@ -259,7 +261,7 @@ export function SearchProvider({ children }: { children: React.ReactNode }) {
         } finally {
             setIsLoading(false);
         }
-    }, [filters, productsCache]);
+    }, [filters, productsCache, transformProductToSearchResult, applyFilters, sortResults]);
 
     // Generate search suggestions
     useEffect(() => {
