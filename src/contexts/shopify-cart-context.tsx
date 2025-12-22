@@ -1,9 +1,9 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { 
-  addToCartOrCreate, 
-  retrieveCart, 
+import {
+  addToCartOrCreate,
+  retrieveCart,
   getCheckoutUrl,
   removeFromCart,
   updateCartLines
@@ -40,6 +40,10 @@ interface ShopifyCartContextType {
   totalAmount: string;
   isLoading: boolean;
   error: string | null;
+  isCartDrawerOpen: boolean;
+  setCartDrawerOpen: (open: boolean) => void;
+  openCartDrawer: () => void;
+  closeCartDrawer: () => void;
   addItem: (variantId: string, quantity?: number) => Promise<void>;
   removeItem: (lineId: string) => Promise<void>;
   updateQuantity: (lineId: string, quantity: number) => Promise<void>;
@@ -56,6 +60,10 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
   const [totalAmount, setTotalAmount] = useState<string>('0');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isCartDrawerOpen, setCartDrawerOpen] = useState(false);
+
+  const openCartDrawer = useCallback(() => setCartDrawerOpen(true), []);
+  const closeCartDrawer = useCallback(() => setCartDrawerOpen(false), []);
 
   const refreshCart = useCallback(async (currentCartId?: string) => {
     const targetCartId = currentCartId || cartId;
@@ -128,13 +136,13 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
 
     try {
       const cart = await addToCartOrCreate(variantId, quantity, cartId || undefined);
-      
+
       // If cart ID changed (new cart was created), update it
       if (cart.id !== cartId) {
         setCartId(cart.id);
         localStorage.setItem('shopify_cart_id', cart.id);
       }
-      
+
       // Update local state with the full cart data including product details
       const cartItems: ShopifyCartItem[] = cart.lines.edges.map(edge => ({
         id: edge.node.id,
@@ -149,6 +157,7 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
       console.log('Cart items with product details:', cartItems);
       setItems(cartItems);
       setTotalAmount(cart.cost.totalAmount.amount);
+      setCartDrawerOpen(true);
     } catch (err) {
       console.error('Error adding item to cart:', err);
       setError('Failed to add item to cart');
@@ -159,13 +168,13 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
 
   const removeItem = async (lineId: string) => {
     if (!cartId) return;
-    
+
     setIsLoading(true);
     setError(null);
 
     try {
       const updatedCart = await removeFromCart(cartId, [lineId]);
-      
+
       // Update local state with the updated cart
       const cartItems: ShopifyCartItem[] = updatedCart.lines.edges.map(edge => ({
         id: edge.node.id,
@@ -189,19 +198,19 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
 
   const updateQuantity = async (lineId: string, quantity: number) => {
     if (!cartId) return;
-    
+
     if (quantity <= 0) {
       // If quantity is 0 or less, remove the item
       await removeItem(lineId);
       return;
     }
-    
+
     setIsLoading(true);
     setError(null);
 
     try {
       const updatedCart = await updateCartLines(cartId, [{ id: lineId, quantity }]);
-      
+
       // Update local state with the updated cart
       const cartItems: ShopifyCartItem[] = updatedCart.lines.edges.map(edge => ({
         id: edge.node.id,
@@ -253,6 +262,10 @@ export function ShopifyCartProvider({ children }: { children: React.ReactNode })
         totalAmount,
         isLoading,
         error,
+        isCartDrawerOpen,
+        setCartDrawerOpen,
+        openCartDrawer,
+        closeCartDrawer,
         addItem,
         removeItem,
         updateQuantity,
